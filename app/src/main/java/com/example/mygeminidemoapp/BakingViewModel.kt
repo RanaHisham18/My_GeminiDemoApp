@@ -1,6 +1,5 @@
 package com.example.mygeminidemoapp
 
-import android.graphics.Bitmap
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.ai.client.generativeai.GenerativeModel
@@ -18,12 +17,11 @@ class BakingViewModel : ViewModel() {
         _uiState.asStateFlow()
 
     private val generativeModel = GenerativeModel(
-        modelName = "gemini-pro-vision",
+        modelName = "gemini-pro",
         apiKey = BuildConfig.apiKey
     )
 
     fun sendPrompt(
-        bitmap: Bitmap,
         prompt: String
     ) {
         _uiState.value = UiState.Loading
@@ -32,7 +30,6 @@ class BakingViewModel : ViewModel() {
             try {
                 val response = generativeModel.generateContent(
                     content {
-                        image(bitmap)
                         text(prompt)
                     }
                 )
